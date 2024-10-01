@@ -77,10 +77,11 @@
     </nav>
 
     <!-- Hero Section -->
-    <div class="hero-section">
+    <div class="hero-section"
+        style="background-image: url('{{ asset('storage/' . $jumbotron->image) }}'); background-size: cover; background-position: center;">
         <div>
-            <h1>Selamat Datang di My School</h1>
-            <p>Pesantren modern untuk generasi emas</p>
+            <h1>{{ $jumbotron->title }}</h1>
+            <p>{{ $jumbotron->content }}</p>
             <a href="#artikel" class="btn btn-primary btn-lg mt-3">Lihat Artikel</a>
         </div>
     </div>

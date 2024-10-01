@@ -30,7 +30,15 @@
                         </p>
                     </a>
                 </li>
-                
+
+                <li class="nav-item">
+                    <a href="{{ route('jumbotron.index')}}" class="nav-link">
+                        <i class="nav-icon fas fa-cogs"></i>
+                        <p>
+                            Jumbotron
+                        </p>
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a href="{{ route('artikel.index') }}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
@@ -42,14 +50,6 @@
                         <i class="nav-icon fas fa-user"></i>
                         <p>
                             Alumni
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-cogs"></i>
-                        <p>
-                            Pengaturan
                         </p>
                     </a>
                 </li>

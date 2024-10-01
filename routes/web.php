@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AlumniController;
+use App\Http\Controllers\JumbotronController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,9 +18,7 @@ use App\Http\Controllers\AlumniController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/admin', function () {
     return view('layouts/admin');
@@ -29,3 +29,5 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 Route::resource('alumni', AlumniController::class);
 
 Route::resource('artikel', ArtikelController::class);
+
+Route::resource('jumbotron', JumbotronController::class);
