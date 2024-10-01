@@ -18,6 +18,6 @@ class HomeController extends Controller
         $artikels = Artikel::all();  // Semua artikel
 
         // Kirim data ke view landing page
-        return view('home', compact('jumbotron', 'alumnis', 'artikels'));
+        return view('welcome', compact('jumbotron', 'alumnis', 'artikels'));
     }
 }
