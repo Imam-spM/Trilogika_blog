@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Jumbotron;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class JumbotronController extends Controller
 {
@@ -21,20 +22,28 @@ class JumbotronController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required',
-            'image' => 'required|image',
+            'title' => 'required|max:255',
             'content' => 'required',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $imagePath = $request->file('image')->store('jumbotrons', 'public');
+        $jumbotron = new Jumbotron();
+        $jumbotron->title = $request->title;
+        $jumbotron->content = $request->content;
 
-        Jumbotron::create([
-            'title' => $request->title,
-            'image' => $imagePath,
-            'content' => $request->content,
-        ]);
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('jumbotron_images', 'public');
+            $jumbotron->image = $imagePath;
+        }
 
-        return redirect()->route('jumbotron.index');
+        $jumbotron->save();
+
+        return redirect()->route('jumbotron.index')->with('success', 'Jumbotron created successfully.');
+    }
+    public function show($id)
+    {
+        $jumbotron = Jumbotron::findOrFail($id);
+        return view('jumbotron.show', compact('jumbotron'));
     }
 
     public function edit(Jumbotron $jumbotron)
@@ -46,27 +55,25 @@ class JumbotronController extends Controller
     {
         $request->validate([
             'title' => 'required',
-            'image' => 'image',
             'content' => 'required',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
+        $jumbotron->title = $request->title;
+        $jumbotron->content = $request->content;
+
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('jumbotrons', 'public');
-            $jumbotron->update([
-                'title' => $request->title,
-                'image' => $imagePath,
-                'content' => $request->content,
-            ]);
-        } else {
-            $jumbotron->update($request->only('title', 'content'));
+            // Delete old image
+            if ($jumbotron->image) {
+                Storage::disk('public')->delete($jumbotron->image);
+            }
+            // Store new image
+            $imagePath = $request->file('image')->store('jumbotron_images', 'public');
+            $jumbotron->image = $imagePath;
         }
 
-        return redirect()->route('jumbotron.index');
-    }
+        $jumbotron->save();
 
-    public function destroy(Jumbotron $jumbotron)
-    {
-        $jumbotron->delete();
-        return redirect()->route('jumbotron.index');
+        return redirect()->route('jumbotron.show', $jumbotron)->with('success', 'Jumbotron updated successfully');
     }
 }

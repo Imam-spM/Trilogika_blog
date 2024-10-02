@@ -1,45 +1,30 @@
 @extends('layouts.admin')
 
-@section('title', 'Jumbotron')
-
 @section('content')
-<div class="container">
-    <h1>Daftar Jumbotron</h1>
-    <a href="{{ route('jumbotron.create') }}" class="btn btn-primary mb-3">Buat Jumbotron Baru</a>
-
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
-
-    <div class="table-responsive">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Judul</th>
-                    <th>Konten</th>
-                    <th>Gambar</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($jumbotrons as $jumbotron)
-                    <tr>
-                        <td>{{ $jumbotron->title }}</td>
-                        <td>{{ Str::limit($jumbotron->content, 100) }}</td>
-                        <td><img src="{{ asset('storage/' . $jumbotron->image) }}" width="100"></td>
-                        <td>
-                            <a href="{{ route('jumbotron.edit', $jumbotron->id) }}" class="btn btn-warning">Edit</a>
-                            <form action="{{ route('jumbotron.destroy', $jumbotron->id) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger" onclick="return confirm('Yakin ingin menghapus jumbotron ini?')">Hapus</button>
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+<div class="container mt-5">
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Jumbotrons</h1>
+            <a href="{{ route('jumbotron.create') }}" class="btn btn-success">Create New Jumbotron</a>
+        </div>
+        <!-- Rest of your index view code -->
+    </div>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        @foreach($jumbotrons as $jumbotron)
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <img src="{{ asset('storage/' . $jumbotron->image) }}" class="card-img-top" alt="{{ $jumbotron->title }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ $jumbotron->title }}</h5>
+                    <p class="card-text">{{ Str::limit($jumbotron->content, 100) }}</p>
+                </div>
+                <div class="card-footer bg-transparent border-top-0">
+                    <a class="btn btn-primary btn-sm" href="{{ route('jumbotron.show', $jumbotron->id) }}">View</a>
+                    <a href="{{ route('jumbotron.edit', ['jumbotron' => $jumbotron->id]) }}" class="btn btn-warning btn-sm">Edit</a>
+                </div>
+            </div>
+        </div>
+        @endforeach
     </div>
 </div>
-
 @endsection

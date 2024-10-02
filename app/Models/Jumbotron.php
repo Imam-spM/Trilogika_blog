@@ -9,10 +9,6 @@ class Jumbotron extends Model
 {
     use HasFactory;
 
-    protected $table = 'jumbotron';
-    protected $fillable = [
-        'title',
-        'image',
-        'content',
-    ];
+    protected $table = 'jumbotrons';
+    protected $fillable = ['title', 'content', 'image'];
 }

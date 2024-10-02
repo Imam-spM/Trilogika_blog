@@ -1,3 +1,10 @@
 @import 'bootstrap/dist/css/bootstrap.min.css';
 @import 'admin-lte/dist/css/adminlte.min.css';
 
+#sidebar {
+    transition: transform 0.3s ease-in-out;
+}
+.navbar-toggler-icon i {
+    font-size: 1.5rem;
+    color: #fff;
+}

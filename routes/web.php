@@ -24,12 +24,20 @@ Route::get('/admin', function () {
     return view('layouts/admin');
 })->name('admin');
 
-// Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/dashboard', function () {
+    return view('layouts/dashboard');
+})->name('dashboard');
+
 
 Route::resource('alumni', AlumniController::class);
 
 Route::resource('artikel', ArtikelController::class);
 
-Route::resource('jumbotron', JumbotronController::class);
+Route::get('/jumbotron/create', [JumbotronController::class, 'create'])->name('jumbotron.create');
+Route::post('/jumbotron', [JumbotronController::class, 'store'])->name('jumbotron.store');
+Route::get('/jumbotron', [JumbotronController::class, 'index'])->name('jumbotron.index');
+Route::get('/jumbotron/{id}', [JumbotronController::class, 'show'])->name('jumbotron.show');
+Route::get('/jumbotron/{jumbotron}/edit', [JumbotronController::class, 'edit'])->name('jumbotron.edit');
+Route::put('/jumbotron/{jumbotron}', [JumbotronController::class, 'update'])->name('jumbotron.update');
 
 
