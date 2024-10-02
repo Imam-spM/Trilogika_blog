@@ -24,10 +24,12 @@ Route::get('/admin', function () {
     return view('layouts/admin');
 })->name('admin');
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+// Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::resource('alumni', AlumniController::class);
 
 Route::resource('artikel', ArtikelController::class);
 
 Route::resource('jumbotron', JumbotronController::class);
+
+
