@@ -28,6 +28,8 @@ Route::get('/dashboard', function () {
     return view('layouts/dashboard');
 })->name('dashboard');
 
+// Route untuk halaman landing page
+// Route::get('/', [ArtikelController::class, 'welcome'])->name('home');
 
 Route::resource('alumni', AlumniController::class);
 

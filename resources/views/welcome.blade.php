@@ -45,6 +45,16 @@
         .card {
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
+        .card-body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-img-top {
+            max-height: 200px;
+            object-fit: cover;
+        }
     </style>
 </head>
 
@@ -95,8 +105,8 @@
                     <div class="card">
                         <img src="https://via.placeholder.com/400x300" class="card-img-top" alt="Alumni 1">
                         <div class="card-body">
-                            <h5 class="card-title">Nama Alumni 1</h5>
-                            <p class="card-text">Deskripsi singkat tentang alumni ini, prestasinya, dan kontribusinya.
+                            <h5 class="card-title">h</h5>
+                            <p class="card-text">h</p>
                             </p>
                         </div>
                     </div>
@@ -126,46 +136,35 @@
     </section>
 
     <!-- Artikel Section -->
-    <section id="artikel" class="artikel-section bg-light">
+    <section id="artikel" class="artikel-section bg-light py-5">
         <div class="container">
-            <h2>Artikel Terbaru</h2>
+            <h2 class="text-center mb-4">Artikel Terbaru</h2>
             <div class="row">
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="https://via.placeholder.com/400x300" class="card-img-top" alt="Artikel 1">
-                        <div class="card-body">
-                            <h5 class="card-title">Judul Artikel 1</h5>
-                            <p class="card-text">Deskripsi singkat tentang artikel ini yang menarik perhatian pembaca.
-                            </p>
-                            <a href="#" class="btn btn-primary">Baca Selengkapnya</a>
+                @foreach($artikels as $a)
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100">
+                        @if($a->gambar)
+                        <img src="{{ asset('storage/' . $a->gambar) }}" class="card-img-top" alt="{{ $a->title }}">
+                        @else
+                        <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="Default Image">
+                        @endif
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">{{ $a->title }}</h5>
+                            <p class="card-text">{{ Str::limit($a->content, 100) }}</p>
+                            <a href="{{ route('artikel.show', $a->id) }}" class="btn btn-primary mt-auto">Baca
+                                Selengkapnya</a>
+                        </div>
+                        <div class="card-footer text-muted">
+                            Dipublish pada: {{ $a->tanggal_publish }}
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="https://via.placeholder.com/400x300" class="card-img-top" alt="Artikel 2">
-                        <div class="card-body">
-                            <h5 class="card-title">Judul Artikel 2</h5>
-                            <p class="card-text">Deskripsi singkat tentang artikel ini yang menarik perhatian pembaca.
-                            </p>
-                            <a href="#" class="btn btn-primary">Baca Selengkapnya</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="https://via.placeholder.com/400x300" class="card-img-top" alt="Artikel 3">
-                        <div class="card-body">
-                            <h5 class="card-title">Judul Artikel 3</h5>
-                            <p class="card-text">Deskripsi singkat tentang artikel ini yang menarik perhatian pembaca.
-                            </p>
-                            <a href="#" class="btn btn-primary">Baca Selengkapnya</a>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
+
+
 
     <!-- Footer -->
     <footer class="bg-dark text-white py-3 text-center">
